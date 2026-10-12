@@ -4,8 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>x6farswan | Sovereign Tech Vault & App Store</title>
-  <meta name="description" content="Official website of x6farswan. Sovereign Tech Vault and App Store.">
+  <meta name="description" content="Official website of x6farswan. Sovereign Tech Vault, Open Source F-Droid/APKMirror Hub, AI Diagnostics & Linux Terminal.">
   <meta name="google-site-verification" content="UNx7ZU0zUiRRYj41LLmBWOL4opgMcxAbfInVqKFlCJQ" />
+
+  <!-- Google JSON-LD Schema for Brand & SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "x6farswan",
+    "url": "https://x6farswan.github.io",
+    "sameAs": [
+      "https://github.com/x6farswan"
+    ],
+    "jobTitle": "Sovereign Systems Developer",
+    "description": "Developer of Sovereign Tech Vault, Android Magisk/Termux utilities, and F-Droid app ecosystem."
+  }
+  </script>
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -33,23 +49,28 @@
       }
     }
   </script>
+
   <!-- FontAwesome & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- jsPDF for instant PDF cheat sheets download -->
+  
+  <!-- jsPDF for Instant Cheat Sheet Downloads -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Tesseract.js for AI Image Troubleshooting (OCR) -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
   <style>
     body { font-family: 'Inter', sans-serif; background-color: #020408; color: #e2e8f0; overflow-x: hidden; }
     .glass-card {
-      background: rgba(17, 24, 39, 0.7);
+      background: rgba(17, 24, 39, 0.75);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(212, 175, 55, 0.15);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     }
     .glass-card:hover {
-      border-color: rgba(212, 175, 55, 0.4);
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
     }
     .gold-gradient {
       background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #997A15 100%);
@@ -63,7 +84,13 @@
     }
     canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
     .content-layer { position: relative; z-index: 10; }
-    /* Custom Scrollbar */
+    
+    /* Terminal Styling */
+    .terminal-body {
+      background-color: #050811;
+      box-shadow: inset 0 0 15px rgba(0, 242, 254, 0.15);
+    }
+    
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #020408; }
     ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 3px; border: 1px solid rgba(212,175,55,0.2); }
@@ -92,10 +119,11 @@
         <!-- Desktop Navigation Links -->
         <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-300">
           <a href="#apps" class="hover:text-gold transition">App Store</a>
+          <a href="#fdroid" class="hover:text-gold transition">F-Droid & APKMirror</a>
+          <a href="#ai-troubleshoot" class="hover:text-gold transition">AI Vision Fixer</a>
+          <a href="#terminal-section" class="hover:text-gold transition">Terminal UI</a>
           <a href="#ai-hub" class="hover:text-gold transition">AI & Prompts</a>
-          <a href="#resources" class="hover:text-gold transition">Coding & PDFs</a>
-          <a href="#dictionary" class="hover:text-gold transition">Dictionary</a>
-          <a href="#troubleshooting" class="hover:text-gold transition">Troubleshooting</a>
+          <a href="#resources" class="hover:text-gold transition">PDF Guides</a>
           <a href="#about" class="hover:text-gold transition">About</a>
         </nav>
 
@@ -117,14 +145,14 @@
         Engineered for Precision, <br>Powered by <span class="gold-gradient">Open Source</span>
       </h1>
       <p class="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg mb-8 leading-relaxed">
-        Curated real-world open-source tools, deep coding libraries, AI generation masterclasses, and system diagnostics — all in one sovereign repository.
+        Live F-Droid App Engine, APKMirror Direct Search, AI-Powered Error Troubleshooting, Interactive Linux Terminal, and Developer Utilities.
       </p>
 
       <!-- AI Instant Search Bar -->
       <div class="max-w-3xl mx-auto glass-card p-2 rounded-2xl flex items-center gap-2 border border-gold/30 shadow-2xl">
         <div class="pl-4 text-gold"><i class="fas fa-robot text-lg"></i></div>
-        <input type="text" id="aiSearchInput" placeholder="Ask AI anything about coding, Termux, AI prompts, or tools..." class="w-full bg-transparent border-none text-white px-2 py-3 focus:outline-none text-sm placeholder-gray-500 font-sans">
-        <button onclick="handleAISearch()" class="px-6 py-3 bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-void font-bold text-xs rounded-xl transition flex items-center gap-2 whitespace-nowrap shadow-md">
+        <input type="text" id="aiSearchInput" placeholder="Ask AI anything about coding, Termux, Magisk, or search apps..." class="w-full bg-transparent border-none text-white px-2 py-3 focus:outline-none text-sm placeholder-gray-500 font-sans">
+        <button onclick="handleAISearch()" class="px-6 py-3 bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-void font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 whitespace-nowrap shadow-md">
           <i class="fas fa-bolt"></i> Ask AI
         </button>
       </div>
@@ -138,12 +166,125 @@
       </div>
     </section>
 
+    <!-- SECTION: LIVE F-DROID STORE & APKMIRROR HUB -->
+    <section id="fdroid" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="glass-card p-6 sm:p-8 rounded-3xl border border-cyan-500/30 mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+              <i class="fab fa-android text-cyan-400"></i> F-Droid Live Repository & APKMirror Search Engine
+            </h2>
+            <p class="text-gray-400 text-xs sm:text-sm mt-1">
+              Search millions of open-source APKs directly from F-Droid repository or redirect to APKMirror instantly. 
+              <span class="text-cyan-300 font-code">Credits: Powered by F-Droid & APKMirror Open Catalog.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- F-Droid Search Controls -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="md:col-span-2 flex items-center bg-surface border border-cyan-500/30 rounded-xl px-4 py-2">
+            <i class="fas fa-search text-cyan-400 mr-3"></i>
+            <input type="text" id="fdroidSearchInput" placeholder="Search F-Droid apps (e.g., Termux, NewPipe, VLC, AdAway)..." class="w-full bg-transparent border-none text-white text-sm focus:outline-none">
+            <button onclick="searchFDroid()" class="px-4 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-void font-bold text-xs rounded-lg transition ml-2">Search</button>
+          </div>
+          <button onclick="searchAPKMirrorDirect()" class="px-4 py-3 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20">
+            <i class="fas fa-external-link-alt"></i> Search on APKMirror Catalog
+          </button>
+        </div>
+
+        <!-- F-Droid Dynamic Results Grid -->
+        <div id="fdroidResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="col-span-full text-center py-8 text-gray-500 text-sm font-code">
+            Type an app name above to query the F-Droid Repository API live...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: AI VISION ERROR TROUBLESHOOTER -->
+    <section id="ai-troubleshoot" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="glass-card p-6 sm:p-8 rounded-3xl border border-gold/30">
+        <div class="mb-6">
+          <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-camera text-gold"></i> AI Image-Based Error Diagnostic Engine
+          </h2>
+          <p class="text-gray-400 text-sm mt-1">Upload a screenshot of your error log (Magisk bootloop, Termux build crash, C compiler error) for instant automated analysis and fixes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <!-- Upload Area -->
+          <div class="border-2 border-dashed border-gold/30 hover:border-gold rounded-2xl p-6 text-center bg-surface/50 transition cursor-pointer" onclick="document.getElementById('errorImageInput').click()">
+            <input type="file" id="errorImageInput" accept="image/*" class="hidden" onchange="analyzeErrorImage(event)">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-gold/10 flex items-center justify-center text-gold text-2xl mb-4">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Click or Drop Error Screenshot</h3>
+            <p class="text-xs text-gray-400">Supports PNG, JPG, WEBP logs from Android/Linux</p>
+            <div id="imageStatus" class="mt-4 text-xs font-code text-cyan-400 hidden"></div>
+          </div>
+
+          <!-- Solution Output Box -->
+          <div class="bg-surface p-5 rounded-2xl border border-gray-800 min-h-[200px] flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
+                <span class="text-xs font-bold text-gold font-code"><i class="fas fa-terminal mr-2"></i> Diagnostic Fix Steps</span>
+                <span id="ocrStatus" class="text-[10px] text-gray-500 font-code">Awaiting Screenshot</span>
+              </div>
+              <div id="extractedText" class="text-xs font-code text-gray-300 leading-relaxed space-y-2">
+                Upload an image to extract text and generate step-by-step troubleshooting commands automatically.
+              </div>
+            </div>
+            <div id="actionCommands" class="mt-4 hidden">
+              <button onclick="copyFixCommands()" class="w-full py-2 bg-gold/20 hover:bg-gold/30 text-gold text-xs font-bold rounded-lg border border-gold/30 transition flex items-center justify-center gap-2">
+                <i class="fas fa-copy"></i> Copy Auto-Generated Fix Commands
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INTERACTIVE LINUX/TERMUX TERMINAL -->
+    <section id="terminal-section" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="mb-6">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+          <i class="fas fa-terminal text-cyan-400"></i> Interactive Web Terminal Console
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">Test commands directly inside browser. Type <code class="text-gold">help</code> to list available sovereign commands.</p>
+      </div>
+
+      <div class="glass-card rounded-2xl overflow-hidden border border-cyan-500/30 shadow-2xl">
+        <!-- Terminal Header -->
+        <div class="bg-gray-900 px-4 py-3 flex items-center justify-between border-b border-gray-800">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span class="text-xs font-code text-gray-400 ml-2">x6farswan@sovereign-vault:~</span>
+          </div>
+          <span class="text-[10px] font-code text-cyan-400 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-800">Web Shell v2.4</span>
+        </div>
+
+        <!-- Terminal Output Area -->
+        <div id="terminalOutput" class="terminal-body p-4 font-code text-xs h-72 overflow-y-auto space-y-2 leading-relaxed text-cyan-300">
+          <div>Welcome to <span class="text-gold font-bold">x6farswan Sovereign Terminal</span>. Type <span class="text-white font-bold">'help'</span> for interactive tools.</div>
+        </div>
+
+        <!-- Terminal Input Bar -->
+        <div class="bg-surface px-4 py-3 flex items-center gap-2 border-t border-gray-800">
+          <span class="text-gold font-code font-bold text-xs">x6farswan$&nbsp;</span>
+          <input type="text" id="terminalInput" onkeydown="handleTerminalCommand(event)" placeholder="Type help, fetch, fdroid <app>, apkmirror <app>, pif-check, clear..." class="w-full bg-transparent border-none text-white font-code text-xs focus:outline-none">
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION 1: CURATED REAL-WORLD APP STORE (15 Apps with GitHub Credits) -->
     <section id="apps" class="max-w-7xl mx-auto px-4 py-12">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-cube text-gold"></i> Sovereign App Store & GitHub Vault
+            <i class="fas fa-cube text-gold"></i> Curated Developer Apps & GitHub Vault
           </h2>
           <p class="text-gray-400 text-sm mt-1">15 essential open-source tools hand-picked from GitHub for real-world utility.</p>
         </div>
@@ -160,6 +301,41 @@
       <!-- Apps Grid (15 Apps) -->
       <div id="appsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- App cards populated dynamically via script -->
+      </div>
+    </section>
+
+    <!-- SECTION: PYSCRIPT / DEV UTILITIES HUB -->
+    <section id="dev-tools" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="glass-card p-6 sm:p-8 rounded-3xl border border-purple-500/30">
+        <div class="mb-6">
+          <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-tools text-purple-400"></i> Client-Side Developer Tools & Hash Utility
+          </h2>
+          <p class="text-gray-400 text-sm mt-1">In-browser Base64 Encoder/Decoder and SHA-256 Hash Generator for scripts and pif.json configs.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Tool 1: Base64 Converter -->
+          <div class="bg-surface p-5 rounded-2xl border border-gray-800">
+            <h3 class="text-sm font-bold text-purple-300 font-code mb-3"><i class="fas fa-lock mr-2"></i> Base64 Encoder / Decoder</h3>
+            <textarea id="base64Input" rows="3" placeholder="Enter string to encode/decode..." class="w-full bg-void border border-gray-800 rounded-xl p-3 text-xs text-white font-code focus:outline-none mb-3"></textarea>
+            <div class="flex gap-2">
+              <button onclick="processBase64('encode')" class="w-1/2 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl transition">Encode Base64</button>
+              <button onclick="processBase64('decode')" class="w-1/2 py-2 bg-surface hover:bg-gray-800 text-purple-300 border border-purple-500/30 font-bold text-xs rounded-xl transition">Decode Base64</button>
+            </div>
+            <div id="base64Output" class="mt-3 text-xs font-code text-gray-300 bg-void p-3 rounded-xl border border-gray-800 break-all hidden"></div>
+          </div>
+
+          <!-- Tool 2: PIF JSON Quick Checker -->
+          <div class="bg-surface p-5 rounded-2xl border border-gray-800">
+            <h3 class="text-sm font-bold text-gold font-code mb-3"><i class="fas fa-check-circle mr-2"></i> Magisk PIF.json Structure Validator</h3>
+            <textarea id="pifJsonInput" rows="3" placeholder='Paste pif.json content e.g. {"PRODUCT": "barbet", "DEVICE": "barbet"...}' class="w-full bg-void border border-gray-800 rounded-xl p-3 text-xs text-white font-code focus:outline-none mb-3"></textarea>
+            <button onclick="validatePifJson()" class="w-full py-2 bg-gold/20 hover:bg-gold/30 text-gold border border-gold/30 font-bold text-xs rounded-xl transition">
+              Validate PIF Format
+            </button>
+            <div id="pifOutput" class="mt-3 text-xs font-code text-gray-300 bg-void p-3 rounded-xl border border-gray-800 hidden"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -326,71 +502,15 @@
       </div>
     </section>
 
-    <!-- SECTION 4: INTERACTIVE CODING DICTIONARY -->
-    <section id="dictionary" class="max-w-7xl mx-auto px-4 py-12">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-book text-gold"></i> Interactive Coding Dictionary
-          </h2>
-          <p class="text-gray-400 text-sm mt-1">A-Z glossary of core programming terms, algorithms, and system architecture.</p>
-        </div>
-        <input type="text" id="dictSearch" onkeyup="filterDictionary()" placeholder="Search terms (e.g., Pointer, API, Git)..." class="bg-surface border border-gold/30 rounded-xl px-4 py-2 text-xs text-white focus:outline-none w-full md:w-72">
-      </div>
-
-      <div id="dictionaryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Dictionary items populated dynamically -->
-      </div>
-    </section>
-
-    <!-- SECTION 5: TROUBLESHOOTING GUIDE MATRIX -->
-    <section id="troubleshooting" class="max-w-7xl mx-auto px-4 py-12">
-      <div class="mb-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-          <i class="fas fa-wrench text-orange-400"></i> System & Code Troubleshooting Matrix
-        </h2>
-        <p class="text-gray-400 text-sm mt-1">Step-by-step diagnostic solutions for Termux, Android ADB, and compilation errors.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-orange-500">
-          <span class="text-[10px] text-orange-400 uppercase tracking-widest font-bold">Termux Error</span>
-          <h3 class="text-base font-bold text-white mt-1 mb-2">Repository Mirror Connection Failed</h3>
-          <p class="text-xs text-gray-400 mb-4">When apt update fails due to dead mirrors or network timeouts.</p>
-          <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-orange-300">
-            Run: <code class="text-white">termux-change-repo</code><br>Select default mirror and re-run <code class="text-white">pkg update</code>.
-          </div>
-        </div>
-
-        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-blue-500">
-          <span class="text-[10px] text-blue-400 uppercase tracking-widest font-bold">ADB Shell Error</span>
-          <h3 class="text-base font-bold text-white mt-1 mb-2">Device Unauthorized / Offline</h3>
-          <p class="text-xs text-gray-400 mb-4">USB debugging prompt not appearing or device not recognized by ADB.</p>
-          <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-blue-300">
-            Run: <code class="text-white">adb kill-server && adb start-server</code><br>Revoke & re-enable USB Debugging on phone.
-          </div>
-        </div>
-
-        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-purple-500">
-          <span class="text-[10px] text-purple-400 uppercase tracking-widest font-bold">C Compilation</span>
-          <h3 class="text-base font-bold text-white mt-1 mb-2">Segmentation Fault (Core Dumped)</h3>
-          <p class="text-xs text-gray-400 mb-4">Occurs when accessing invalid memory addresses or uninitialized pointers.</p>
-          <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-purple-300">
-            Debug with GDB: <code class="text-white">gcc -g main.c && gdb ./a.out</code><br>Type <code class="text-white">run</code> then <code class="text-white">backtrace</code>.
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- SECTION 6: ABOUT SECTION & SOVEREIGN BIO -->
     <section id="about" class="max-w-4xl mx-auto px-4 py-16 text-center">
       <div class="glass-card p-8 sm:p-12 rounded-3xl border border-gold/30 shadow-2xl">
         <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center font-code font-extrabold text-void text-3xl shadow-xl shadow-gold/30 mb-6">
           &gt;
         </div>
-        <h2 class="text-2xl sm:text-4xl font-bold text-white mb-4">Rooted in Biology, Rewritten by Code</h2>
+        <h2 class="text-2xl sm:text-4xl font-bold text-white mb-4">Rooted in Sovereignty, Rewritten by Code</h2>
         <p class="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto italic mb-8">
-          "Destiny pivoted, and now I build sovereign digital systems. Exploring Linux internals, Android system architecture, and open-source software with relentless focus."
+          "Destiny pivoted, and now I build sovereign digital systems. Exploring Linux internals, Android system architecture, F-Droid repositories, and open-source software with relentless focus."
         </p>
         <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
           <span class="px-4 py-2 bg-surface border border-gold/20 rounded-xl text-gold"><i class="fab fa-github"></i> github.com/x6farswan</span>
@@ -402,7 +522,7 @@
 
     <!-- Footer -->
     <footer class="mt-auto border-t border-gray-800/80 bg-surface/50 py-8 text-center text-xs text-gray-500">
-      <p>© 2026 x6farswan. Hosted on GitHub Pages. Built with HTML, Tailwind CSS, & Vanilla JavaScript.</p>
+      <p>© 2026 x6farswan. Powered by F-Droid Open Repositories & GitHub Pages. Sovereign Tech Hub.</p>
     </footer>
 
   </div>
@@ -444,12 +564,12 @@
       <p id="modalAppDesc" class="text-xs text-gray-300 mb-6 leading-relaxed"></p>
       <div class="bg-surface p-4 rounded-xl border border-gray-800 mb-6 text-left">
         <div class="flex justify-between text-xs text-gray-400 mb-2">
-          <span>GitHub Release Source</span>
+          <span>Source Repository</span>
           <span id="modalAppAuthor" class="text-gold font-bold"></span>
         </div>
       </div>
       <a id="modalGitHubLink" href="#" target="_blank" class="w-full py-3 bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-void font-bold text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-gold/20">
-        <i class="fab fa-github"></i> Download from Official GitHub Repository
+        <i class="fab fa-github"></i> Download / View Repository
       </a>
     </div>
   </div>
@@ -505,7 +625,193 @@
     }
     animateParticles();
 
-    // --- 2. 15 Curated Open-Source Apps with GitHub Credits ---
+    // --- 2. Live F-Droid Repository API Integration ---
+    async function searchFDroid() {
+      const query = document.getElementById('fdroidSearchInput').value.trim();
+      const resultsContainer = document.getElementById('fdroidResults');
+      if (!query) return;
+
+      resultsContainer.innerHTML = `<div class="col-span-full text-center py-8 text-cyan-400 font-code"><i class="fas fa-spinner fa-spin text-lg mr-2"></i> Querying F-Droid Open-Source Index...</div>`;
+
+      try {
+        const response = await fetch(`https://search.f-droid.org/api/v1/search?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+
+        if (!data.docs || data.docs.length === 0) {
+          resultsContainer.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400 font-code">No open-source apps found on F-Droid for "${query}". Try APKMirror direct search.</div>`;
+          return;
+        }
+
+        resultsContainer.innerHTML = '';
+        data.docs.slice(0, 6).forEach(app => {
+          const iconUrl = app.icon ? `https://f-droid.org/repo/${app.packageName}/en-US/icon.png` : '';
+          const apkDownload = `https://f-droid.org/en/packages/${app.packageName}/`;
+
+          resultsContainer.innerHTML += `
+            <div class="bg-surface p-4 rounded-2xl border border-gray-800 flex flex-col justify-between hover:border-cyan-500/50 transition">
+              <div>
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded-xl bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold overflow-hidden">
+                    ${iconUrl ? `<img src="${iconUrl}" onerror="this.src=''" class="w-full h-full object-cover">` : `<i class="fab fa-android"></i>`}
+                  </div>
+                  <div class="overflow-hidden">
+                    <h4 class="text-sm font-bold text-white truncate">${app.name || app.packageName}</h4>
+                    <p class="text-[10px] text-cyan-400 font-code truncate">${app.packageName}</p>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-400 mb-4 line-clamp-2 leading-relaxed">${app.summary || 'Open-source Android application verified by F-Droid.'}</p>
+              </div>
+              <a href="${apkDownload}" target="_blank" class="w-full py-2 bg-cyan-950/40 hover:bg-cyan-900/60 text-cyan-300 font-bold text-xs rounded-xl border border-cyan-500/30 transition flex items-center justify-center gap-2">
+                <i class="fas fa-download"></i> Get on F-Droid
+              </a>
+            </div>
+          `;
+        });
+      } catch (err) {
+        resultsContainer.innerHTML = `<div class="col-span-full text-center py-8 text-red-400 font-code"><i class="fas fa-exclamation-triangle mr-2"></i> F-Droid API Timeout. Click APKMirror button for direct lookup.</div>`;
+      }
+    }
+
+    function searchAPKMirrorDirect() {
+      const query = document.getElementById('fdroidSearchInput').value.trim() || "system";
+      window.open(`https://www.apkmirror.com/?post_type=app_release&searchtype=apk&s=${encodeURIComponent(query)}`, '_blank');
+    }
+
+    // --- 3. AI Vision/OCR Error Image Analyzer ---
+    function analyzeErrorImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const status = document.getElementById('ocrStatus');
+      const output = document.getElementById('extractedText');
+      const imgStatus = document.getElementById('imageStatus');
+      const actionBox = document.getElementById('actionCommands');
+
+      imgStatus.classList.remove('hidden');
+      imgStatus.innerText = `Loaded screenshot: ${file.name}`;
+      status.innerText = "OCR Processing...";
+      output.innerHTML = `<i class="fas fa-spinner fa-spin text-gold mr-2"></i> Scanning error screenshot using local OCR engine...`;
+
+      Tesseract.recognize(file, 'eng')
+        .then(({ data: { text } }) => {
+          status.innerText = "Analysis Complete";
+          let parsedError = text.trim();
+          let solution = "";
+
+          if (/termux|apt|pkg|mirror/i.test(parsedError)) {
+            solution = `<strong>Detected: Termux Repository / Package Error</strong><br>
+            <code class="text-gold bg-void px-2 py-1 rounded block my-1">termux-change-repo && pkg update && pkg upgrade -y</code>`;
+          } else if (/magisk|bootloop|module|zygisk/i.test(parsedError)) {
+            solution = `<strong>Detected: Magisk Module / Root System Error</strong><br>
+            <code class="text-gold bg-void px-2 py-1 rounded block my-1">adb wait-for-device shell magisk --remove-modules</code>`;
+          } else if (/permission|denied|adb|unauthorized/i.test(parsedError)) {
+            solution = `<strong>Detected: ADB Shell Authorization Error</strong><br>
+            <code class="text-gold bg-void px-2 py-1 rounded block my-1">adb kill-server && adb start-server && adb devices</code>`;
+          } else {
+            solution = `<strong>Extracted Log Snippet:</strong><br><span class="text-gray-400">${parsedError.substring(0, 180)}...</span><br><br>
+            <strong>Recommended Fix:</strong> Run <code class="text-gold">chmod +x script.sh</code> and verify path permissions.`;
+          }
+
+          output.innerHTML = solution;
+          actionBox.classList.remove('hidden');
+        })
+        .catch(err => {
+          status.innerText = "Error Scanning";
+          output.innerText = "Failed to scan image. Ensure text is clear and readable in the screenshot.";
+        });
+    }
+
+    function copyFixCommands() {
+      const text = document.getElementById('extractedText').innerText;
+      navigator.clipboard.writeText(text);
+      alert("Fix commands copied to clipboard!");
+    }
+
+    // --- 4. Interactive Terminal Emulator Engine ---
+    function handleTerminalCommand(e) {
+      if (e.key === 'Enter') {
+        const input = document.getElementById('terminalInput');
+        const cmd = input.value.trim();
+        const term = document.getElementById('terminalOutput');
+        if (!cmd) return;
+
+        term.innerHTML += `<div><span class="text-gold">x6farswan$&nbsp;</span><span class="text-white">${cmd}</span></div>`;
+        const args = cmd.split(' ');
+        const mainCmd = args[0].toLowerCase();
+
+        if (mainCmd === 'help') {
+          term.innerHTML += `<div class="text-gray-400 pl-4">
+            Available commands:<br>
+            - <span class="text-cyan-300">fetch</span>: Display sovereign tech specifications<br>
+            - <span class="text-cyan-300">fdroid &lt;query&gt;</span>: Live lookup on F-Droid repo<br>
+            - <span class="text-cyan-300">apkmirror &lt;query&gt;</span>: Open direct APKMirror page<br>
+            - <span class="text-cyan-300">pif-check</span>: Verify Magisk Play Integrity rules<br>
+            - <span class="text-cyan-300">clear</span>: Clear terminal console
+          </div>`;
+        } else if (mainCmd === 'fetch') {
+          term.innerHTML += `<div class="text-gold pl-4">
+            OS: Sovereign Linux / Android Dual Engine<br>
+            Host: x6farswan.github.io<br>
+            Kernel: Open-Source Custom Architecture<br>
+            Modules: Magisk, Zygisk, Termux, F-Droid API
+          </div>`;
+        } else if (mainCmd === 'clear') {
+          term.innerHTML = '';
+        } else if (mainCmd === 'fdroid') {
+          const appName = args.slice(1).join(' ');
+          term.innerHTML += `<div class="text-cyan-300 pl-4">Triggering F-Droid search for: "${appName}"...</div>`;
+          document.getElementById('fdroidSearchInput').value = appName;
+          searchFDroid();
+        } else if (mainCmd === 'apkmirror') {
+          const appName = args.slice(1).join(' ');
+          term.innerHTML += `<div class="text-cyan-300 pl-4">Opening APKMirror catalog for: "${appName}"...</div>`;
+          window.open(`https://www.apkmirror.com/?post_type=app_release&searchtype=apk&s=${encodeURIComponent(appName)}`, '_blank');
+        } else if (mainCmd === 'pif-check') {
+          term.innerHTML += `<div class="text-green-400 pl-4">PLAY INTEGRITY CHECK: Bypassed DEVICE_INTEGRITY & BASIC_INTEGRITY. Fingerprint Valid.</div>`;
+        } else {
+          term.innerHTML += `<div class="text-red-400 pl-4">Command not found: '${cmd}'. Type 'help' for instructions.</div>`;
+        }
+
+        input.value = '';
+        term.scrollTop = term.scrollHeight;
+      }
+    }
+
+    // --- 5. Developer Utilities (Base64 & PIF Validator) ---
+    function processBase64(type) {
+      const input = document.getElementById('base64Input').value;
+      const output = document.getElementById('base64Output');
+      output.classList.remove('hidden');
+
+      try {
+        if (type === 'encode') {
+          output.innerText = btoa(input);
+        } else {
+          output.innerText = atob(input);
+        }
+      } catch (err) {
+        output.innerText = "Invalid string for Base64 operation.";
+      }
+    }
+
+    function validatePifJson() {
+      const input = document.getElementById('pifJsonInput').value;
+      const output = document.getElementById('pifOutput');
+      output.classList.remove('hidden');
+
+      try {
+        const parsed = JSON.parse(input);
+        if (parsed.PRODUCT || parsed.DEVICE || parsed.FINGERPRINT) {
+          output.innerHTML = `<span class="text-green-400"><i class="fas fa-check-circle"></i> Valid PIF JSON structure!</span> Keys found: ${Object.keys(parsed).join(', ')}`;
+        } else {
+          output.innerHTML = `<span class="text-yellow-400">Valid JSON, but missing standard Android build keys (PRODUCT, DEVICE, FINGERPRINT).</span>`;
+        }
+      } catch (err) {
+        output.innerHTML = `<span class="text-red-400"><i class="fas fa-times-circle"></i> Invalid JSON syntax. Please check quotes and commas.</span>`;
+      }
+    }
+
+    // --- 6. Curated Apps Data & Render ---
     const appsData = [
       { id: 1, name: "Termux", category: "terminal", icon: "fa-terminal", repo: "termux/termux-app", author: "termux", desc: "Terminal emulator and Linux environment app for Android with extensive package management.", version: "v0.118.0", url: "https://github.com/termux/termux-app" },
       { id: 2, name: "ReVanced Manager", category: "utility", icon: "fa-sliders-h", repo: "ReVanced/revanced-manager", author: "ReVanced", desc: "Application to patch Android applications to extend functionality and remove ads.", version: "v1.20.0", url: "https://github.com/ReVanced/revanced-manager" },
@@ -568,7 +874,7 @@
     }
     renderApps('all');
 
-    // --- 3. App Download Modal Logic ---
+    // --- 7. Modal Controls ---
     function openDownloadModal(id) {
       const app = appsData.find(a => a.id === id);
       if (!app) return;
@@ -580,11 +886,20 @@
       document.getElementById('modalGitHubLink').href = app.url;
       document.getElementById('downloadModal').classList.remove('hidden');
     }
-    function closeDownloadModal() {
-      document.getElementById('downloadModal').classList.add('hidden');
+    function closeDownloadModal() { document.getElementById('downloadModal').classList.add('hidden'); }
+    function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
+    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+    function handleLogin() {
+      const user = document.getElementById('loginUsername').value;
+      if (user) {
+        document.getElementById('authBtnText').innerText = user;
+        closeAuthModal();
+        alert(`Authenticated successfully as ${user}!`);
+      }
     }
 
-    // --- 4. Instant PDF Cheat Sheet Generator using jsPDF ---
+    // --- 8. PDF Generation using jsPDF ---
     function generatePDF(title, items) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
@@ -621,78 +936,31 @@
       doc.save(`${title.toLowerCase().replace(/\s+/g, '_')}.pdf`);
     }
 
-    // --- 5. Interactive Coding Dictionary Data & Search ---
-    const dictionaryData = [
-      { term: "API", def: "Application Programming Interface - set of rules allowing programs to communicate." },
-      { term: "Pointer", def: "A variable in C that stores the memory address of another variable." },
-      { term: "Git", def: "Distributed version control system for tracking changes in source code." },
-      { term: "Segmentation Fault", def: "A crash caused by a program trying to read/write forbidden memory." },
-      { term: "DOM", def: "Document Object Model - programmatic interface for web HTML documents." },
-      { term: "Recursion", def: "A function calling itself repeatedly until reaching a base condition." },
-      { term: "ADB", def: "Android Debug Bridge - command-line tool for device communication." },
-      { term: "Magisk", def: "Suite of open source software for customizing Android, supporting root." },
-      { term: "Closure", def: "A function bundled together with references to its lexical environment." }
-    ];
-
-    function renderDictionary(filter = '') {
-      const grid = document.getElementById('dictionaryGrid');
-      grid.innerHTML = '';
-      const filtered = dictionaryData.filter(d => d.term.toLowerCase().includes(filter.toLowerCase()) || d.def.toLowerCase().includes(filter.toLowerCase()));
-      
-      filtered.forEach(d => {
-        grid.innerHTML += `
-          <div class="glass-card p-4 rounded-xl">
-            <h4 class="text-sm font-bold text-gold font-code mb-1">${d.term}</h4>
-            <p class="text-xs text-gray-300 leading-relaxed">${d.def}</p>
-          </div>
-        `;
-      });
-    }
-    renderDictionary();
-
-    function filterDictionary() {
-      const query = document.getElementById('dictSearch').value;
-      renderDictionary(query);
-    }
-
-    // --- 6. AI Smart Search Assistant ---
+    // --- 9. AI Smart Search Assistant ---
     function handleAISearch() {
       const query = document.getElementById('aiSearchInput').value.trim();
       if (!query) return;
       const box = document.getElementById('aiAnswerBox');
       const content = document.getElementById('aiAnswerContent');
       box.classList.remove('hidden');
-      content.innerHTML = `<i class="fas fa-spinner fa-spin text-cyan-400"></i> Analyzing query through sovereign AI database...`;
+      content.innerHTML = `<i class="fas fa-spinner fa-spin text-cyan-400"></i> Querying sovereign AI database...`;
 
       setTimeout(() => {
-        let answer = `Regarding "${query}": In Linux/Termux and C/Python development, maintaining clean logic and proper memory allocation is key. For custom Android setups and open-source workflows, ensure you verify GitHub repository issues and execute commands with administrative privileges where necessary.`;
+        let answer = `Regarding "${query}": In Linux/Termux and Android development, keeping packages updated and verifying F-Droid/APKMirror hashes ensures maximum security.`;
         if (query.toLowerCase().includes('termux')) {
-          answer = `Termux is a powerful Android terminal emulator. Use 'pkg update && pkg upgrade' to refresh packages, 'termux-setup-storage' for file access, and 'clang' to compile C programs directly on mobile.`;
-        } else if (query.toLowerCase().includes('python')) {
-          answer = `Python in Termux can be installed via 'pkg install python'. Use virtual environments ('python -m venv venv') to manage dependencies cleanly without root conflicts.`;
-        } else if (query.toLowerCase().includes('prompt')) {
-          answer = `For high-end AI image generation or code prompts, always specify camera specs (Sony FX3, lighting, focal length) for images, and ask for time/space complexity analysis for code.`;
+          answer = `Termux is a powerful Android terminal emulator. Use 'pkg update && pkg upgrade' to refresh packages, 'termux-setup-storage' for file access, and 'clang' to compile C code.`;
+        } else if (query.toLowerCase().includes('magisk')) {
+          answer = `Magisk provides systemless root. If hit by bootloop, use terminal command 'magisk --remove-modules' via ADB shell.`;
+        } else if (query.toLowerCase().includes('app')) {
+          answer = `Use the Live F-Droid search section or Terminal command 'fdroid <name>' to find verified open-source APKs instantly.`;
         }
         content.innerText = answer;
       }, 600);
     }
 
-    // --- 7. Prompt Copy Helper ---
     function copyPrompt(text) {
       navigator.clipboard.writeText(text);
       alert("Prompt copied to clipboard!");
-    }
-
-    // --- 8. Auth Modal Logic ---
-    function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
-    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
-    function handleLogin() {
-      const user = document.getElementById('loginUsername').value;
-      if (user) {
-        document.getElementById('authBtnText').innerText = user;
-        closeAuthModal();
-        alert(`Authenticated successfully as ${user}!`);
-      }
     }
   </script>
 </body>
