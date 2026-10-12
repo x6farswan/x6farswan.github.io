@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>x6farswan | Sovereign Tech Vault & App Store</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            void: '#020408',
+            obsidian: '#090d16',
+            surface: '#111827',
+            gold: {
+              DEFAULT: '#D4AF37',
+              light: '#F3E5AB',
+              dark: '#997A15'
+            },
+            neoncyan: '#00f2fe',
+            neonblue: '#4facfe'
+          },
+          fontFamily: {
+            code: ['Fira Code', 'monospace'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <!-- FontAwesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- jsPDF for instant PDF cheat sheets download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #020408; color: #e2e8f0; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    .glass-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #997A15 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .cyan-gradient {
+      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .content-layer { position: relative; z-index: 10; }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #020408; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 3px; border: 1px solid rgba(212,175,55,0.2); }
+    ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-gold/30 selection:text-gold-light">
+
+  <!-- Background Particle Canvas -->
+  <canvas id="particleCanvas"></canvas>
+
+  <div class="content-layer flex flex-col min-h-screen">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card border-b border-gray-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center font-code font-bold text-void text-lg shadow-lg shadow-gold/20">
+            &gt;
+          </div>
+          <span class="text-lg font-bold font-code tracking-wider text-white">
+            x6farswan<span class="text-gold animate-pulse">_</span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-300">
+          <a href="#apps" class="hover:text-gold transition">App Store</a>
+          <a href="#ai-hub" class="hover:text-gold transition">AI & Prompts</a>
+          <a href="#resources" class="hover:text-gold transition">Coding & PDFs</a>
+          <a href="#dictionary" class="hover:text-gold transition">Dictionary</a>
+          <a href="#troubleshooting" class="hover:text-gold transition">Troubleshooting</a>
+          <a href="#about" class="hover:text-gold transition">About</a>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-3">
+          <button onclick="openAuthModal()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-void text-xs font-bold transition shadow-lg shadow-gold/20 flex items-center gap-2">
+            <i class="fas fa-user-shield"></i> <span id="authBtnText">Account / Login</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-6xl mx-auto px-4 pt-16 pb-12 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold text-gold bg-gold/10 border border-gold/30 rounded-full mb-6">
+        <i class="fas fa-microchip"></i> Sovereign Digital Ecosystem & Open Source Hub
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-extrabold text-white mb-6 tracking-tight">
+        Engineered for Precision, <br>Powered by <span class="gold-gradient">Open Source</span>
+      </h1>
+      <p class="text-gray-400 max-w-2xl mx-auto text-base sm:text-lg mb-8 leading-relaxed">
+        Curated real-world open-source tools, deep coding libraries, AI generation masterclasses, and system diagnostics — all in one sovereign repository.
+      </p>
+
+      <!-- AI Instant Search Bar -->
+      <div class="max-w-3xl mx-auto glass-card p-2 rounded-2xl flex items-center gap-2 border border-gold/30 shadow-2xl">
+        <div class="pl-4 text-gold"><i class="fas fa-robot text-lg"></i></div>
+        <input type="text" id="aiSearchInput" placeholder="Ask AI anything about coding, Termux, AI prompts, or tools..." class="w-full bg-transparent border-none text-white px-2 py-3 focus:outline-none text-sm placeholder-gray-500 font-sans">
+        <button onclick="handleAISearch()" class="px-6 py-3 bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-void font-bold text-xs rounded-xl transition flex items-center gap-2 whitespace-nowrap shadow-md">
+          <i class="fas fa-bolt"></i> Ask AI
+        </button>
+      </div>
+      <!-- AI Answer Output Box -->
+      <div id="aiAnswerBox" class="max-w-3xl mx-auto mt-4 text-left glass-card p-5 rounded-xl hidden border border-cyan-500/30">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-xs font-bold text-cyan-400 flex items-center gap-2"><i class="fas fa-brain"></i> AI Intelligence Engine</span>
+          <button onclick="document.getElementById('aiAnswerBox').classList.add('hidden')" class="text-gray-400 hover:text-white text-xs"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="aiAnswerContent" class="text-sm text-gray-300 font-code leading-relaxed"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: CURATED REAL-WORLD APP STORE (15 Apps with GitHub Credits) -->
+    <section id="apps" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-cube text-gold"></i> Sovereign App Store & GitHub Vault
+          </h2>
+          <p class="text-gray-400 text-sm mt-1">15 essential open-source tools hand-picked from GitHub for real-world utility.</p>
+        </div>
+        <!-- Category Filter Tabs -->
+        <div class="flex flex-wrap gap-2 text-xs">
+          <button onclick="filterApps('all')" class="app-filter-btn px-3 py-1.5 rounded-lg bg-gold text-void font-bold transition">All</button>
+          <button onclick="filterApps('terminal')" class="app-filter-btn px-3 py-1.5 rounded-lg bg-surface text-gray-300 hover:bg-gray-800 transition border border-gray-800">Terminal</button>
+          <button onclick="filterApps('media')" class="app-filter-btn px-3 py-1.5 rounded-lg bg-surface text-gray-300 hover:bg-gray-800 transition border border-gray-800">Media</button>
+          <button onclick="filterApps('utility')" class="app-filter-btn px-3 py-1.5 rounded-lg bg-surface text-gray-300 hover:bg-gray-800 transition border border-gray-800">Utility</button>
+          <button onclick="filterApps('privacy')" class="app-filter-btn px-3 py-1.5 rounded-lg bg-surface text-gray-300 hover:bg-gray-800 transition border border-gray-800">Privacy</button>
+        </div>
+      </div>
+
+      <!-- Apps Grid (15 Apps) -->
+      <div id="appsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- App cards populated dynamically via script -->
+      </div>
+    </section>
+
+    <!-- SECTION 2: AI MASTERCLASS & PROMPT ENGINEERING -->
+    <section id="ai-hub" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+          <i class="fas fa-wand-magic-sparkles text-cyan-400"></i> AI Masterclass & Prompt Engineering Hub
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">Learn how to generate stunning images, automate workflows, and master AI prompt generation.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl mb-4">
+              <i class="fas fa-image"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Image Generation Prompts</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">Master Midjourney, Stable Diffusion & FLUX. Use cinematic lighting, shutter speed parameters, and aspect ratios to create hyper-realistic visuals.</p>
+            <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-cyan-300 mb-4">
+              "Cinematic portrait of a cyberpunk hacker in Chamoli mountains, neon glow, Sony FX3, 85mm f/1.4, volumetric lighting, photorealistic --ar 16:9"
+            </div>
+          </div>
+          <button onclick="copyPrompt('Cinematic portrait of a cyberpunk hacker in Chamoli mountains, neon glow, Sony FX3, 85mm f/1.4, volumetric lighting, photorealistic --ar 16:9')" class="w-full py-2 bg-surface hover:bg-gray-800 text-xs font-bold text-cyan-400 border border-cyan-500/30 rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fas fa-copy"></i> Copy Pro Prompt
+          </button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-xl mb-4">
+              <i class="fas fa-code-branch"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Code Refactoring & Debugging</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">Use LLMs as junior pair-programmers. Feed error stacks with clear context blocks to fix segmentation faults and Python bugs instantly.</p>
+            <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-gold mb-4">
+              "Act as senior C/Python engineer. Refactor this snippet for O(1) space complexity and explain memory management trade-offs."
+            </div>
+          </div>
+          <button onclick="copyPrompt('Act as senior C/Python engineer. Refactor this snippet for O(1) space complexity and explain memory management trade-offs.')" class="w-full py-2 bg-surface hover:bg-gray-800 text-xs font-bold text-gold border border-gold/30 rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fas fa-copy"></i> Copy Pro Prompt
+          </button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl mb-4">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Workflow Automation</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mb-4">Chain AI prompts with shell scripts, Python web scrapers, and Termux cron jobs to build automated data pipelines.</p>
+            <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-purple-300 mb-4">
+              "Generate a robust Python script using BeautifulSoup and Requests to parse daily tech RSS feeds into JSON."
+            </div>
+          </div>
+          <button onclick="copyPrompt('Generate a robust Python script using BeautifulSoup and Requests to parse daily tech RSS feeds into JSON.')" class="w-full py-2 bg-surface hover:bg-gray-800 text-xs font-bold text-purple-400 border border-purple-500/30 rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fas fa-copy"></i> Copy Pro Prompt
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: CODING LIBRARY & DOWNLOADABLE PDF CHEAT SHEETS -->
+    <section id="resources" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+          <i class="fas fa-file-pdf text-red-400"></i> Coding Library & Downloadable PDF Cheat Sheets
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">Instant offline PDF guides and video tutorials for C, Python, Termux, and Linux Shell.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- PDF Card 1 -->
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 font-bold">
+                <i class="fas fa-file-pdf"></i>
+              </div>
+              <span class="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded font-code">PDF Guide</span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Termux Shortcut Keys & Commands</h3>
+            <p class="text-xs text-gray-400 mb-4">Complete reference for terminal control keys, package managers, and storage permissions.</p>
+          </div>
+          <div class="space-y-2">
+            <button onclick="generatePDF('Termux Shortcuts & Command Manual', ['pkg update && pkg upgrade', 'termux-setup-storage', 'Ctrl + A / E (Start/End of line)', 'Ctrl + K (Kill line)', 'apt install python git clang make'])" class="w-full py-2 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/20">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
+            <a href="https://www.youtube.com/results?search_query=termux+tutorial+for+beginners" target="_blank" class="w-full py-1.5 bg-surface hover:bg-gray-800 text-red-400 text-xs rounded-xl transition flex items-center justify-center gap-2 border border-red-500/20">
+              <i class="fab fa-youtube"></i> Watch Video Guide
+            </a>
+          </div>
+        </div>
+
+        <!-- PDF Card 2 -->
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">
+                <i class="fas fa-file-pdf"></i>
+              </div>
+              <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded font-code">PDF Guide</span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">C Programming Fundamentals</h3>
+            <p class="text-xs text-gray-400 mb-4">Pointers, memory allocation, arrays, structs, and GCC compilation flags on Android.</p>
+          </div>
+          <div class="space-y-2">
+            <button onclick="generatePDF('C Programming Master Cheat Sheet', ['gcc main.c -o main && ./main', 'Pointers: int *ptr = &var;', 'Dynamic Memory: malloc(), calloc(), free()', 'Structures & Typedefs', 'File I/O: fopen, fread, fwrite, fclose'])" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
+            <a href="https://www.youtube.com/results?search_query=c+programming+full+course" target="_blank" class="w-full py-1.5 bg-surface hover:bg-gray-800 text-blue-400 text-xs rounded-xl transition flex items-center justify-center gap-2 border border-blue-500/20">
+              <i class="fab fa-youtube"></i> Watch Video Guide
+            </a>
+          </div>
+        </div>
+
+        <!-- PDF Card 3 -->
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-10 h-10 rounded-lg bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400 font-bold">
+                <i class="fas fa-file-pdf"></i>
+              </div>
+              <span class="text-[10px] bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded font-code">PDF Guide</span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Python Syntax & Scripting</h3>
+            <p class="text-xs text-gray-400 mb-4">Lists, dictionaries, generators, OOP concepts, requests, and automation scripts.</p>
+          </div>
+          <div class="space-y-2">
+            <button onclick="generatePDF('Python Programming Cheat Sheet', ['pip install requests beautifulsoup4', 'List Comprehensions: [x**2 for x in range(10)]', 'Decorators and Generators (yield)', 'Object Oriented Python: class & __init__', 'Exception Handling: try...except...finally'])" class="w-full py-2 bg-yellow-600 hover:bg-yellow-500 text-void font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-yellow-600/20">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
+            <a href="https://www.youtube.com/results?search_query=python+programming+tutorial" target="_blank" class="w-full py-1.5 bg-surface hover:bg-gray-800 text-yellow-400 text-xs rounded-xl transition flex items-center justify-center gap-2 border border-yellow-500/20">
+              <i class="fab fa-youtube"></i> Watch Video Guide
+            </a>
+          </div>
+        </div>
+
+        <!-- PDF Card 4 -->
+        <div class="glass-card p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-10 h-10 rounded-lg bg-green-500/10 border border-green-500/30 flex items-center justify-center text-green-400 font-bold">
+                <i class="fas fa-file-pdf"></i>
+              </div>
+              <span class="text-[10px] bg-green-500/20 text-green-300 px-2 py-0.5 rounded font-code">PDF Guide</span>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">Linux Bash & ADB Commands</h3>
+            <p class="text-xs text-gray-400 mb-4">ADB shell debloating, grep, awk, sed pipelines, permissions, and service management.</p>
+          </div>
+          <div class="space-y-2">
+            <button onclick="generatePDF('Linux Bash & ADB Reference Manual', ['adb devices && adb shell', 'pm uninstall -k --user 0 <package>', 'grep "pattern" file.txt', 'awk \'{print $1}\' log.txt', 'chmod +x script.sh && ./script.sh'])" class="w-full py-2 bg-green-600 hover:bg-green-500 text-void font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-green-600/20">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
+            <a href="https://www.youtube.com/results?search_query=linux+command+line+tutorial" target="_blank" class="w-full py-1.5 bg-surface hover:bg-gray-800 text-green-400 text-xs rounded-xl transition flex items-center justify-center gap-2 border border-green-500/20">
+              <i class="fab fa-youtube"></i> Watch Video Guide
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INTERACTIVE CODING DICTIONARY -->
+    <section id="dictionary" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-book text-gold"></i> Interactive Coding Dictionary
+          </h2>
+          <p class="text-gray-400 text-sm mt-1">A-Z glossary of core programming terms, algorithms, and system architecture.</p>
+        </div>
+        <input type="text" id="dictSearch" onkeyup="filterDictionary()" placeholder="Search terms (e.g., Pointer, API, Git)..." class="bg-surface border border-gold/30 rounded-xl px-4 py-2 text-xs text-white focus:outline-none w-full md:w-72">
+      </div>
+
+      <div id="dictionaryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dictionary items populated dynamically -->
+      </div>
+    </section>
+
+    <!-- SECTION 5: TROUBLESHOOTING GUIDE MATRIX -->
+    <section id="troubleshooting" class="max-w-7xl mx-auto px-4 py-12">
+      <div class="mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+          <i class="fas fa-wrench text-orange-400"></i> System & Code Troubleshooting Matrix
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">Step-by-step diagnostic solutions for Termux, Android ADB, and compilation errors.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-orange-500">
+          <span class="text-[10px] text-orange-400 uppercase tracking-widest font-bold">Termux Error</span>
+          <h3 class="text-base font-bold text-white mt-1 mb-2">Repository Mirror Connection Failed</h3>
+          <p class="text-xs text-gray-400 mb-4">When apt update fails due to dead mirrors or network timeouts.</p>
+          <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-orange-300">
+            Run: <code class="text-white">termux-change-repo</code><br>Select default mirror and re-run <code class="text-white">pkg update</code>.
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-blue-500">
+          <span class="text-[10px] text-blue-400 uppercase tracking-widest font-bold">ADB Shell Error</span>
+          <h3 class="text-base font-bold text-white mt-1 mb-2">Device Unauthorized / Offline</h3>
+          <p class="text-xs text-gray-400 mb-4">USB debugging prompt not appearing or device not recognized by ADB.</p>
+          <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-blue-300">
+            Run: <code class="text-white">adb kill-server && adb start-server</code><br>Revoke & re-enable USB Debugging on phone.
+          </div>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-purple-500">
+          <span class="text-[10px] text-purple-400 uppercase tracking-widest font-bold">C Compilation</span>
+          <h3 class="text-base font-bold text-white mt-1 mb-2">Segmentation Fault (Core Dumped)</h3>
+          <p class="text-xs text-gray-400 mb-4">Occurs when accessing invalid memory addresses or uninitialized pointers.</p>
+          <div class="bg-surface p-3 rounded-xl border border-gray-800 font-code text-[11px] text-purple-300">
+            Debug with GDB: <code class="text-white">gcc -g main.c && gdb ./a.out</code><br>Type <code class="text-white">run</code> then <code class="text-white">backtrace</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ABOUT SECTION & SOVEREIGN BIO -->
+    <section id="about" class="max-w-4xl mx-auto px-4 py-16 text-center">
+      <div class="glass-card p-8 sm:p-12 rounded-3xl border border-gold/30 shadow-2xl">
+        <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center font-code font-extrabold text-void text-3xl shadow-xl shadow-gold/30 mb-6">
+          &gt;
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-bold text-white mb-4">Rooted in Biology, Rewritten by Code</h2>
+        <p class="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto italic mb-8">
+          "Destiny pivoted, and now I build sovereign digital systems. Exploring Linux internals, Android system architecture, and open-source software with relentless focus."
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
+          <span class="px-4 py-2 bg-surface border border-gold/20 rounded-xl text-gold"><i class="fab fa-github"></i> github.com/x6farswan</span>
+          <span class="px-4 py-2 bg-surface border border-cyan-500/20 rounded-xl text-cyan-400"><i class="fas fa-terminal"></i> Linux & Termux Specialist</span>
+          <span class="px-4 py-2 bg-surface border border-purple-500/20 rounded-xl text-purple-400"><i class="fas fa-shield-alt"></i> Sovereign Systems</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-gray-800/80 bg-surface/50 py-8 text-center text-xs text-gray-500">
+      <p>© 2026 x6farswan. Hosted on GitHub Pages. Built with HTML, Tailwind CSS, & Vanilla JavaScript.</p>
+    </footer>
+
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-void/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full p-6 rounded-3xl border border-gold/40 relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 mx-auto rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-xl mb-3">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white">Sovereign Account Access</h3>
+        <p class="text-xs text-gray-400 mt-1">Sign in to save preferences & access developer tools</p>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Username / Callsign</label>
+          <input type="text" id="loginUsername" placeholder="e.g. x6farswan" class="w-full bg-surface border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Access Passkey</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" class="w-full bg-surface border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold">
+        </div>
+        <button onclick="handleLogin()" class="w-full py-3 bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-void font-bold text-sm rounded-xl transition shadow-lg shadow-gold/20">
+          Authenticate & Enter Vault
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP DOWNLOAD MODAL -->
+  <div id="downloadModal" class="fixed inset-0 z-50 bg-void/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card max-w-lg w-full p-6 rounded-3xl border border-gold/40 relative text-center">
+      <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+      <div id="modalAppIcon" class="w-16 h-16 mx-auto rounded-2xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-3xl mb-4"></div>
+      <h3 id="modalAppName" class="text-2xl font-bold text-white mb-1"></h3>
+      <p id="modalAppRepo" class="text-xs text-cyan-400 font-code mb-4"></p>
+      <p id="modalAppDesc" class="text-xs text-gray-300 mb-6 leading-relaxed"></p>
+      <div class="bg-surface p-4 rounded-xl border border-gray-800 mb-6 text-left">
+        <div class="flex justify-between text-xs text-gray-400 mb-2">
+          <span>GitHub Release Source</span>
+          <span id="modalAppAuthor" class="text-gold font-bold"></span>
+        </div>
+      </div>
+      <a id="modalGitHubLink" href="#" target="_blank" class="w-full py-3 bg-gradient-to-r from-gold to-gold-dark hover:from-gold-light hover:to-gold text-void font-bold text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-gold/20">
+        <i class="fab fa-github"></i> Download from Official GitHub Repository
+      </a>
+    </div>
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // --- 1. Background Particle Canvas Animation ---
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      radius: Math.random() * 1.5 + 0.5
+    }));
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.08)';
+
+      particles.forEach((p, index) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (let j = index + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // --- 2. 15 Curated Open-Source Apps with GitHub Credits ---
+    const appsData = [
+      { id: 1, name: "Termux", category: "terminal", icon: "fa-terminal", repo: "termux/termux-app", author: "termux", desc: "Terminal emulator and Linux environment app for Android with extensive package management.", version: "v0.118.0", url: "https://github.com/termux/termux-app" },
+      { id: 2, name: "ReVanced Manager", category: "utility", icon: "fa-sliders-h", repo: "ReVanced/revanced-manager", author: "ReVanced", desc: "Application to patch Android applications to extend functionality and remove ads.", version: "v1.20.0", url: "https://github.com/ReVanced/revanced-manager" },
+      { id: 3, name: "Seal", category: "media", icon: "fa-download", repo: "JunkFood/Seal", author: "JunkFood", desc: "Video/audio downloader for Android, backed by yt-dlp with Material You UI.", version: "v1.11.0", url: "https://github.com/JunkFood/Seal" },
+      { id: 4, name: "Shizuku", category: "utility", icon: "fa-bolt", repo: "RikkaApps/Shizuku", author: "RikkaApps", desc: "Use system APIs directly with adb/root privileges without root limitations.", version: "v13.5.0", url: "https://github.com/RikkaApps/Shizuku" },
+      { id: 5, name: "NewPipe", category: "media", icon: "fa-play-circle", repo: "TeamNewPipe/NewPipe", author: "TeamNewPipe", desc: "The lightweight open-source streaming client for YouTube and media portals.", version: "v0.27.0", url: "https://github.com/TeamNewPipe/NewPipe" },
+      { id: 6, name: "Spotube", category: "media", icon: "fa-music", repo: "KRTirtho/spotube", author: "KRTirtho", desc: "Open-source Spotify client utilizing YouTube & Piped as audio source without ads.", version: "v3.8.0", url: "https://github.com/KRTirtho/spotube" },
+      { id: 7, name: "Material Files", category: "utility", icon: "fa-folder-open", repo: "zhanghai/MaterialFiles", author: "zhanghai", desc: "Material Design file manager for Android with root and storage explorer.", version: "v1.8.3", url: "https://github.com/zhanghai/MaterialFiles" },
+      { id: 8, name: "Syncthing", category: "privacy", icon: "fa-sync", repo: "syncthing/syncthing-android", author: "syncthing", desc: "Continuous decentralized file synchronization between devices securely.", version: "v1.27.0", url: "https://github.com/syncthing/syncthing-android" },
+      { id: 9, name: "KeePassDX", category: "privacy", icon: "fa-key", repo: "KeePassDX/KeePassDX", author: "KeePassDX", desc: "Lightweight password manager for Android adhering to security standards.", version: "v3.4.0", url: "https://github.com/KeePassDX/KeePassDX" },
+      { id: 10, name: "LibreTube", category: "media", icon: "fa-video", repo: "libre-tube/LibreTube", author: "libre-tube", desc: "An open-source alternative client for YouTube built with Piped API.", version: "v0.21.0", url: "https://github.com/libre-tube/LibreTube" },
+      { id: 11, name: "Mihon", category: "media", icon: "fa-book-reader", repo: "mihonapp/mihon", author: "mihonapp", desc: "Free and open-source manga reader for Android built on Tachiyomi legacy.", version: "v0.16.5", url: "https://github.com/mihonapp/mihon" },
+      { id: 12, name: "Lawnchair", category: "utility", icon: "fa-home", repo: "LawnchairLauncher/lawnchair", author: "Lawnchair", desc: "Customizable open-source home screen launcher with Pixel UI aesthetics.", version: "v14.0", url: "https://github.com/LawnchairLauncher/lawnchair" },
+      { id: 13, name: "AndroWish", category: "terminal", icon: "fa-code", repo: "termux/androwish", author: "termux", desc: "Tcl/Tk runtime environment and scripting workbench for Android.", version: "v1.0", url: "https://github.com/termux" },
+      { id: 14, name: "NetGuard", category: "privacy", icon: "fa-shield-alt", repo: "M66B/NetGuard", author: "M66B", desc: "Simple open-source firewall to block application internet access without root.", version: "v2.29", url: "https://github.com/M66B/NetGuard" },
+      { id: 15, name: "Orgzly", category: "utility", icon: "fa-tasks", repo: "orgzly/orgzly-android", author: "orgzly", desc: "Outliner and note-taking app for keeping notes and todos in Org-mode format.", version: "v1.8.6", url: "https://github.com/orgzly/orgzly-android" }
+    ];
+
+    function renderApps(filter = 'all') {
+      const grid = document.getElementById('appsGrid');
+      grid.innerHTML = '';
+      const filtered = filter === 'all' ? appsData : appsData.filter(a => a.category === filter);
+
+      filtered.forEach(app => {
+        grid.innerHTML += `
+          <div class="glass-card p-5 rounded-2xl flex flex-col justify-between transition group">
+            <div>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-xl group-hover:scale-110 transition">
+                  <i class="fas ${app.icon}"></i>
+                </div>
+                <span class="text-[10px] bg-surface text-gold border border-gold/20 px-2 py-0.5 rounded font-code">${app.version}</span>
+              </div>
+              <h3 class="text-base font-bold text-white mb-1">${app.name}</h3>
+              <p class="text-xs text-cyan-400 font-code mb-3"><i class="fab fa-github"></i> ${app.repo}</p>
+              <p class="text-xs text-gray-400 mb-4 leading-relaxed">${app.desc}</p>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[11px] text-gray-500 mb-3 pt-2 border-t border-gray-800">
+                <span>By <strong class="text-gray-300">${app.author}</strong></span>
+                <span class="capitalize text-gold">${app.category}</span>
+              </div>
+              <button onclick="openDownloadModal(${app.id})" class="w-full py-2 bg-surface hover:bg-gray-800 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-2 border border-gold/30">
+                <i class="fas fa-external-link-alt"></i> View & Download Repo
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function filterApps(category) {
+      document.querySelectorAll('.app-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-gold', 'text-void', 'font-bold');
+        btn.classList.add('bg-surface', 'text-gray-300');
+      });
+      event.target.classList.remove('bg-surface', 'text-gray-300');
+      event.target.classList.add('bg-gold', 'text-void', 'font-bold');
+      renderApps(category);
+    }
+    renderApps('all');
+
+    // --- 3. App Download Modal Logic ---
+    function openDownloadModal(id) {
+      const app = appsData.find(a => a.id === id);
+      if (!app) return;
+      document.getElementById('modalAppIcon').innerHTML = `<i class="fas ${app.icon}"></i>`;
+      document.getElementById('modalAppName').innerText = app.name;
+      document.getElementById('modalAppRepo').innerText = app.repo;
+      document.getElementById('modalAppDesc').innerText = app.desc;
+      document.getElementById('modalAppAuthor').innerText = app.author;
+      document.getElementById('modalGitHubLink').href = app.url;
+      document.getElementById('downloadModal').classList.remove('hidden');
+    }
+    function closeDownloadModal() {
+      document.getElementById('downloadModal').classList.add('hidden');
+    }
+
+    // --- 4. Instant PDF Cheat Sheet Generator using jsPDF ---
+    function generatePDF(title, items) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFillColor(15, 23, 42);
+      doc.rect(0, 0, 210, 297, 'F');
+      
+      doc.setTextColor(212, 175, 55);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(22);
+      doc.text("x6farswan Tech Vault", 20, 25);
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(16);
+      doc.text(title, 20, 35);
+      
+      doc.setDrawColor(212, 175, 55);
+      doc.line(20, 42, 190, 42);
+      
+      doc.setFont("courier", "normal");
+      doc.setFontSize(11);
+      doc.setTextColor(200, 200, 200);
+      
+      let y = 55;
+      items.forEach((item, idx) => {
+        doc.text(`${idx + 1}. ${item}`, 20, y);
+        y += 12;
+      });
+
+      doc.setFont("helvetica", "italic");
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 100);
+      doc.text("Generated via x6farswan.github.io | Sovereign Open Source Repository", 20, 280);
+
+      doc.save(`${title.toLowerCase().replace(/\s+/g, '_')}.pdf`);
+    }
+
+    // --- 5. Interactive Coding Dictionary Data & Search ---
+    const dictionaryData = [
+      { term: "API", def: "Application Programming Interface - set of rules allowing programs to communicate." },
+      { term: "Pointer", def: "A variable in C that stores the memory address of another variable." },
+      { term: "Git", def: "Distributed version control system for tracking changes in source code." },
+      { term: "Segmentation Fault", def: "A crash caused by a program trying to read/write forbidden memory." },
+      { term: "DOM", def: "Document Object Model - programmatic interface for web HTML documents." },
+      { term: "Recursion", def: "A function calling itself repeatedly until reaching a base condition." },
+      { term: "ADB", def: "Android Debug Bridge - command-line tool for device communication." },
+      { term: "Magisk", def: "Suite of open source software for customizing Android, supporting root." },
+      { term: "Closure", def: "A function bundled together with references to its lexical environment." }
+    ];
+
+    function renderDictionary(filter = '') {
+      const grid = document.getElementById('dictionaryGrid');
+      grid.innerHTML = '';
+      const filtered = dictionaryData.filter(d => d.term.toLowerCase().includes(filter.toLowerCase()) || d.def.toLowerCase().includes(filter.toLowerCase()));
+      
+      filtered.forEach(d => {
+        grid.innerHTML += `
+          <div class="glass-card p-4 rounded-xl">
+            <h4 class="text-sm font-bold text-gold font-code mb-1">${d.term}</h4>
+            <p class="text-xs text-gray-300 leading-relaxed">${d.def}</p>
+          </div>
+        `;
+      });
+    }
+    renderDictionary();
+
+    function filterDictionary() {
+      const query = document.getElementById('dictSearch').value;
+      renderDictionary(query);
+    }
+
+    // --- 6. AI Smart Search Assistant ---
+    function handleAISearch() {
+      const query = document.getElementById('aiSearchInput').value.trim();
+      if (!query) return;
+      const box = document.getElementById('aiAnswerBox');
+      const content = document.getElementById('aiAnswerContent');
+      box.classList.remove('hidden');
+      content.innerHTML = `<i class="fas fa-spinner fa-spin text-cyan-400"></i> Analyzing query through sovereign AI database...`;
+
+      setTimeout(() => {
+        let answer = `Regarding "${query}": In Linux/Termux and C/Python development, maintaining clean logic and proper memory allocation is key. For custom Android setups and open-source workflows, ensure you verify GitHub repository issues and execute commands with administrative privileges where necessary.`;
+        if (query.toLowerCase().includes('termux')) {
+          answer = `Termux is a powerful Android terminal emulator. Use 'pkg update && pkg upgrade' to refresh packages, 'termux-setup-storage' for file access, and 'clang' to compile C programs directly on mobile.`;
+        } else if (query.toLowerCase().includes('python')) {
+          answer = `Python in Termux can be installed via 'pkg install python'. Use virtual environments ('python -m venv venv') to manage dependencies cleanly without root conflicts.`;
+        } else if (query.toLowerCase().includes('prompt')) {
+          answer = `For high-end AI image generation or code prompts, always specify camera specs (Sony FX3, lighting, focal length) for images, and ask for time/space complexity analysis for code.`;
+        }
+        content.innerText = answer;
+      }, 600);
+    }
+
+    // --- 7. Prompt Copy Helper ---
+    function copyPrompt(text) {
+      navigator.clipboard.writeText(text);
+      alert("Prompt copied to clipboard!");
+    }
+
+    // --- 8. Auth Modal Logic ---
+    function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
+    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+    function handleLogin() {
+      const user = document.getElementById('loginUsername').value;
+      if (user) {
+        document.getElementById('authBtnText').innerText = user;
+        closeAuthModal();
+        alert(`Authenticated successfully as ${user}!`);
+      }
+    }
+  </script>
+</body>
+</html>
